@@ -1,0 +1,10 @@
+#批量下载清单
+#下载类型：主页|喜欢|合集
+#下载地址：主页和喜欢就是放主页地址就行，合集要放手机上分享出来的合集地址
+#建议第一个地址放分享出来的短地址（例如https://v.douyin.com/kA6wx85/），这样会自动弹出人机认证，后续的地址就可以免校验了
+#每行一个，中间用一个空格分隔
+#下载类型 下载地址
+#主页 https://v.douyin.com/k9QnfdF/
+#喜欢 https://v.douyin.com/k9QnfdF/
+#合集 https://v.douyin.com/kU8AQqg/
+#主页 https://v.douyin.com/kcGvXRK/
