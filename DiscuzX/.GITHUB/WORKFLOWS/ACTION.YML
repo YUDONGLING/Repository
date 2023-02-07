@@ -1,0 +1,47 @@
+name: DiscuzX
+
+on:
+  workflow_dispatch:
+  schedule:
+   - cron: 0 16 * * *
+
+jobs:
+  DiscuzX:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+     
+      - name: Discuz X Checkin
+        run: |
+          pip install requests
+          pushMode='${{secrets.PUSHMODE}}'
+          pushTokn='${{secrets.PUSHTOKN}}'
+          userList='${{secrets.USERLIST}}'
+          passList='${{secrets.PASSLIST}}'
+          hostPool='${{secrets.HOSTPOOL}}'
+          python3 MAIN.PY ${pushMode} ${pushTokn} ${userList} ${passList} ${hostPool}
+          
+      - name: Update Readme Time
+        run: |
+          time=$(TZ=UTC-8 date +'%Y-%m-%d %H:%M:%S')
+          sed -i "s/^DiscuzX: Last Running @.*/DiscuzX-1: Last Running @ $time (UTC+8:00) /g" README.MD
+          
+      - name: Git Push Assets
+        run: |
+          git init
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git branch -m main
+          git add --all
+          git commit -m "Update README.MD"
+          git push -u origin -f
